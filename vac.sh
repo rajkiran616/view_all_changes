@@ -1,7 +1,9 @@
 #!/bin/bash
 
-echo "Sicher, dass Sie jetzt alle Commits für die Datei betrachten wollen? Stellen Sie möglichst sicher, dass keine Datei modified und keine staged ist."
-read x
+if [ $# -eq 0 ]; then
+    cat README.md
+    exit
+fi
 
 directory=$(dirname "$1")
 cd "$directory"
@@ -10,7 +12,7 @@ tmp=$(git log "$1" | grep "^commit " | tail -r | cut -d \  -f2)
 commits=($tmp)
 
 
-echo "Sie werden gleich ${#commits[@]} Commits betrachten. Wollen Sie fortfahren?"
+echo "You will view ${#commits[@]} commits shortly. Press enter to continue."
 read x
 
 
@@ -23,4 +25,5 @@ done
 
 git difftool
 
-echo "Es wäre natürlich geil, wenn man das in einem HTML-File betrachten könnte ..."
+# TODO
+# View all changes in an HTML-File
